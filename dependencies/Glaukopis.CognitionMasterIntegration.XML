@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Glaukopis.CognitionMasterIntegration</name>
+    </assembly>
+    <members>
+        <member name="T:Glaukopis.CognitionMasterIntegration.PictureBoxExtensions">
+            <summary>
+            Erweiterung für die <see cref="T:System.Windows.Forms.PictureBox"/> zur Koordinatenumrechnung
+            </summary>
+        </member>
+        <member name="M:Glaukopis.CognitionMasterIntegration.PictureBoxExtensions.GetImageCoordinates(System.Windows.Forms.PictureBox,System.Drawing.Point)">
+            <summary>
+            liefert die Bildkoordinate zu der übergebenen control-Koordinate
+            </summary>
+            <param name="pictureBox">control</param>
+            <param name="controlCoordinate">control-Koordinate (mouse-Koordinate)</param>
+            <returns>Bildkoordinate</returns>
+        </member>
+        <member name="M:Glaukopis.CognitionMasterIntegration.PictureBoxExtensions.translateZoomMousePosition(System.Windows.Forms.PictureBox,System.Drawing.Point)">
+            <summary>
+            liefert die Bildkoordinate zu der übergebenen control-Koordinate
+            </summary>
+            <param name="pictureBox">control</param>
+            <param name="controlCoordinate">control-Koordinate (mouse-Koordinate)</param>
+            <returns>Bildkoordinate</returns>
+        </member>
+    </members>
+</doc>

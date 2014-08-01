@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Glaukopis.Adapters.R</name>
+    </assembly>
+    <members>
+        <member name="T:Glaukopis.Adapters.R.RConnector">
+            <summary>
+            Adapter für R.NET
+            </summary>
+        </member>
+        <member name="M:Glaukopis.Adapters.R.RConnector.StartOutput(System.Int32,System.Int32)">
+            <summary>
+            startet die Ausgabe von R in ein Bild
+            </summary>
+            <param name="width">Breite des Ausgabebildes</param>
+            <param name="height">Höhe des Ausgabebildes</param>
+            <returns>handle für den Aufruf</returns>
+        </member>
+        <member name="M:Glaukopis.Adapters.R.RConnector.EndOutput(System.Guid)">
+            <summary>
+            beendet die Ausgabe von R in ein Bild und liefert dieses
+            </summary>
+            <param name="handle">handle welches von <see cref="M:Glaukopis.Adapters.R.RConnector.StartOutput(System.Int32,System.Int32)"/> geliefert wurde</param>
+            <returns>Ausgabebild</returns>
+        </member>
+        <member name="P:Glaukopis.Adapters.R.RConnector.BinPath">
+            <summary>
+            Installationsverzeichnis von R; kann nur vor dem ersten Aufruf von <see cref="P:Glaukopis.Adapters.R.RConnector.Engine"/> gesetzt werden 
+            </summary>
+        </member>
+        <member name="P:Glaukopis.Adapters.R.RConnector.Engine">
+            <summary>
+            Zugriff auf die R-Engine (singleton)<remarks>beim ersten Aufruf wird die Instanz im thread scope des Aufrufers erzeugt</remarks>
+            </summary>
+        </member>
+        <member name="P:Glaukopis.Adapters.R.RConnector.OutputPath">
+            <summary>
+            Verzeichnis für die Zwischenspeicherung der Ausgabebilder; default-Wert ist C:\temp\
+            </summary>
+        </member>
+    </members>
+</doc>

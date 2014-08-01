@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D1A54EE0-CAE0-4514-964E-C877F62146F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StromaDetectionPlugin</RootNamespace>
+    <AssemblyName>StromaDetectionPlugin</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="#Accessory">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\#Accessory\CognitionMaster\#Accessory.dll</HintPath>
+    </Reference>
+    <Reference Include="#Accessory.CognitionMaster">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\#Accessory\CognitionMaster\#Accessory.CognitionMaster.exe</HintPath>
+    </Reference>
+    <Reference Include="#Accessory.CognitionMaster.DefaultPlugins">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\#Accessory\CognitionMaster\#Accessory.CognitionMaster.DefaultPlugins.dll</HintPath>
+    </Reference>
+    <Reference Include="#Accessory.Imaging">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\#Accessory\CognitionMaster\#Accessory.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Glaukopis.Adapters.R">
+      <HintPath>..\dependencies\Glaukopis.Adapters.R.dll</HintPath>
+    </Reference>
+    <Reference Include="Glaukopis.Core">
+      <HintPath>..\dependencies\Glaukopis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glaukopis.SharpAccessoryIntegration.Filter">
+      <HintPath>..\dependencies\Glaukopis.SharpAccessoryIntegration.Filter.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet">
+      <HintPath>..\dependencies\RDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet.NativeLibrary">
+      <HintPath>..\dependencies\RDotNet.NativeLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CellCoreAnalysisPlugin.cs" />
+    <Compile Include="CellCoreSegmentation.cs" />
+    <Compile Include="Centroid.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StromaDetectionPlugin.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y $(TargetFileName) C:\ProgramData\#Accessory\CognitionMaster\Plugins\$(TargetFileName)
+copy /Y "$(SolutionDir)dependencies\Glaukopis.SharpAccessoryIntegration.Filter.dll" C:\ProgramData\#Accessory\CognitionMaster\Plugins\Glaukopis.SharpAccessoryIntegration.Filter.dll
+copy /Y "$(SolutionDir)dependencies\Glaukopis.Core.dll" C:\ProgramData\#Accessory\CognitionMaster\Plugins\Glaukopis.Core.dll
+
+copy /Y "$(SolutionDir)dependencies\Glaukopis.Adapters.R.dll" C:\ProgramData\#Accessory\CognitionMaster\Plugins\Glaukopis.Adapters.R.dll
+copy /Y "$(SolutionDir)dependencies\RDotNet.dll" C:\ProgramData\#Accessory\CognitionMaster\Plugins\RDotNet.dll
+copy /Y "$(SolutionDir)dependencies\RDotNet.NativeLibrary.dll" C:\ProgramData\#Accessory\CognitionMaster\Plugins\RDotNet.NativeLibrary.dll</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

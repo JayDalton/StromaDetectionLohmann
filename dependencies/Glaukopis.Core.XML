@@ -1,0 +1,627 @@
+﻿<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>Glaukopis.Core</name>
+  </assembly>
+  <members>
+    <member name="T:Glaukopis.Core.Analysis.ClusterDefinition`1">
+      <summary>
+            Zerlegung eines Merkmalsraums
+            </summary>
+      <typeparam name="T">Merkmalstyp</typeparam>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.ClusterDefinition`1.#ctor(`0[])">
+      <summary>
+            erzeugt die Zerlegung aus den angegebenen Grenzen;
+            der Typparameter muß von IComparable ableiten
+            </summary>
+      <param name="borders">Grenzen</param>
+      <ensures csharp="1 &lt; borders.Length" vb="1 &lt; borders.Length">1 &lt; borders.Length</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.ClusterDefinition`1.#ctor(Glaukopis.Core.Analysis.IDistribution{`0})">
+      <summary>
+            erzeugt die Zerlegung aus den Quantilen der Verteilung;
+            der Typparameter muß von IComparable ableiten
+            </summary>
+      <param name="distribution">Verteilung</param>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.ClusterDefinition`1.#ctor(System.Collections.Generic.IList{Glaukopis.Core.Analysis.IRange{`0}})">
+      <summary>
+            erzeugt und initialisiert die Zerlegung
+            </summary>
+      <param name="ranges">Cluster</param>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.ClusterDefinition`1.Assign(`0)">
+      <summary>
+            ordnet einen Wert einem Cluster zu
+            </summary>
+      <param name="value">Wert</param>
+      <returns>index des Clusters in <see cref="P:Glaukopis.Core.Analysis.ClusterDefinition`1.Clusters" /></returns>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ClusterDefinition`1.Clusters">
+      <summary>
+            Cluster
+            </summary>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.Distribution`1">
+      <summary>
+            Verteilung für ordinalskalierbare Typen
+            </summary>
+      <typeparam name="T">ordinalskalierbarer Typ</typeparam>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.IDistribution`1">
+      <summary>
+            Beschreibung für Verteilungen
+            </summary>
+      <typeparam name="T">ordinalskalierbarer Typ</typeparam>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.IRange`1">
+      <summary>
+            Beschreibung für eindimensionale Begrenzungen (Minimum und Maximum) für ordinalskalierbare Typen
+            </summary>
+      <typeparam name="T">ordinalskalierbarer Typ</typeparam>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.IRange`1.Contains(`0,System.Boolean)">
+      <summary>
+            prüft ob ein Element zwischen <see cref="P:Glaukopis.Core.Analysis.IRange`1.Minimum" /> bzw. <see cref="P:Glaukopis.Core.Analysis.IRange`1.Maximum" /> liegt
+            </summary>
+      <param name="item">fragliches Element</param>
+      <param name="open">bestimmt ob das Intervall offen ist; falls true: <see cref="P:Glaukopis.Core.Analysis.IRange`1.Minimum" /> und <see cref="P:Glaukopis.Core.Analysis.IRange`1.Maximum" /> sind nicht enthalten</param>
+      <returns>true wenn enthalten, false sonst</returns>
+      <pure />
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.IRange`1.Minimum">
+      <summary>
+            kleinstes Element
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.IRange`1.Maximum">
+      <summary>
+            größtes Element
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.IRange`1.Count">
+      <summary>
+            Anzahl der Elemente
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.IDistribution`1.Reduce``1(System.Func{`0,``0})">
+      <summary>
+            reduziert die Verteilung auf die 5 definierten Quantile und konvertiert den Typ
+            </summary>
+      <typeparam name="TNew">neuer Typ</typeparam>
+      <param name="convert">Konvertierungsmethode</param>
+      <returns>reduzierte Verteilung</returns>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.IDistribution`1.Q25">
+      <summary>
+            0,25-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.IDistribution`1.Median">
+      <summary>
+            0,5-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.IDistribution`1.Q75">
+      <summary>
+            0,75-Quantil
+            </summary>
+    </member>
+    <member name="F:Glaukopis.Core.Analysis.Distribution`1.list">
+      <summary>
+            zugrunde liegende Liste
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.#ctor(System.Comparison{`0})">
+      <summary>
+            erzeugt die Verteilung
+            </summary>
+      <param name="comparison">Vergleichsmethode für die Elemente, muß für Implementierungen von IComparable nicht angegeben werden</param>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.#ctor(System.Collections.Generic.IEnumerable{`0},System.Comparison{`0})">
+      <summary>
+            erzeugt und initialisiert die Verteilung mit den angegebenen Elementen
+            </summary>
+      <param name="values">Elemente</param>
+      <param name="comparison">Vergleichsmethode für die Elemente, muß für Implementierungen von IComparable nicht angegeben werden</param>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.ensureSorting">
+      <summary>
+            stellt sicher das die zu Grunde liegende Liste sortiert ist
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.Glaukopis#Core#Analysis#IRange{T}#Contains(`0,System.Boolean)">
+      <summary>
+            prüft ob ein Element zwischen <see cref="P:Glaukopis.Core.Analysis.Distribution`1.Minimum" /> bzw. <see cref="P:Glaukopis.Core.Analysis.Distribution`1.Maximum" /> liegt
+            </summary>
+      <param name="item">fragliches Element</param>
+      <param name="open">bestimmt ob das Intervall offen ist; falls true: <see cref="P:Glaukopis.Core.Analysis.Distribution`1.Minimum" /> und <see cref="P:Glaukopis.Core.Analysis.Distribution`1.Maximum" /> sind nicht enthalten</param>
+      <returns>true wenn enthalten, false sonst</returns>
+      <pure />
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.Reduce``1(System.Func{`0,``0})">
+      <summary>
+            reduziert die Verteilung auf die 5 definierten Quantile und konvertiert den Typ
+            </summary>
+      <typeparam name="TNew">neuer Typ</typeparam>
+      <param name="convert">Konvertierungsmethode</param>
+      <returns>reduzierte Verteilung</returns>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.Quantile(System.Double)">
+      <summary>
+            liefert das p-Quantil
+            </summary>
+      <param name="p">Unterschreitungsanteil</param>
+      <returns>p-Quantil</returns>
+      <ensures csharp="0.0 &lt;= p" vb="0 &lt;= p">0.0 &lt;= p</ensures>
+      <ensures csharp="1.0 &gt;= p" vb="1 &gt;= p">1.0 &gt;= p</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.GetEnumerator">
+      <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+      <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+            </returns>
+      <ensures inheritedFrom="M:System.Collections.Generic.IEnumerable`1.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result != null" vb="result &lt;&gt; Nothing">result != null</ensures>
+      <ensures inheritedFrom="M:System.Collections.Generic.IEnumerable`1.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result.get_Model == this.get_Model" vb="result.get_Model = Me.get_Model">result.get_Model == this.get_Model</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.System#Collections#IEnumerable#GetEnumerator">
+      <summary>
+            Gibt einen Enumerator zurück, der eine Auflistung durchläuft.
+            </summary>
+      <returns>
+            Ein <see cref="T:System.Collections.IEnumerator" />-Objekt, das zum Durchlaufen der Auflistung verwendet werden kann.
+            </returns>
+      <ensures inheritedFrom="M:System.Collections.IEnumerable.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result != null" vb="result &lt;&gt; Nothing">result != null</ensures>
+      <ensures inheritedFrom="M:System.Collections.IEnumerable.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result.get_Model == this.get_Model" vb="result.get_Model = Me.get_Model">result.get_Model == this.get_Model</ensures>
+      <ensures inheritedFrom="M:System.Collections.IEnumerable.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result.get_CurrentIndex == -1" vb="result.get_CurrentIndex = -1">result.get_CurrentIndex == -1</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.Add(`0)">
+      <summary>
+            Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1" />.
+            </summary>
+      <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
+      <ensures inheritedFrom="M:System.Collections.Generic.ICollection`1.Add(`0)" inheritedFromTypeName="ICollection" csharp="this.Count &gt;= old(this.Count)" vb="Me.Count &gt;= old(Me.Count)">this.Count &gt;= old(this.Count)</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.Clear">
+      <summary>
+            Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1" />.
+            </summary>
+      <ensures inheritedFrom="M:System.Collections.Generic.ICollection`1.Clear" inheritedFromTypeName="ICollection" csharp="this.Count == 0" vb="Me.Count = 0">this.Count == 0</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.System#Collections#Generic#ICollection{T}#Contains(`0)">
+      <summary>
+            Determines whether the <see cref="T:System.Collections.Generic.ICollection`1" /> contains a specific value.
+            </summary>
+      <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
+      <returns>
+            true if <paramref name="item" /> is found in the <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, false.
+            </returns>
+      <ensures inheritedFrom="M:System.Collections.Generic.ICollection`1.Contains(`0)" inheritedFromTypeName="ICollection" csharp="result ⇒ this.Count &gt; 0" vb="result Implies Me.Count &gt; 0">!result || this.Count &gt; 0</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.CopyTo(`0[],System.Int32)">
+      <summary>
+            Copies to.
+            </summary>
+      <param name="array">The array.</param>
+      <param name="arrayIndex">Index of the array.</param>
+      <requires inheritedFrom="M:System.Collections.Generic.ICollection`1.CopyTo(`0[],System.Int32)" inheritedFromTypeName="ICollection" csharp="array != null" vb="array &lt;&gt; Nothing">array != null</requires>
+      <requires inheritedFrom="M:System.Collections.Generic.ICollection`1.CopyTo(`0[],System.Int32)" inheritedFromTypeName="ICollection" csharp="arrayIndex &gt;= 0" vb="arrayIndex &gt;= 0">arrayIndex &gt;= 0</requires>
+      <requires inheritedFrom="M:System.Collections.Generic.ICollection`1.CopyTo(`0[],System.Int32)" inheritedFromTypeName="ICollection" csharp="arrayIndex &lt;= array.Length - this.Count" vb="arrayIndex &lt;= array.Length - Me.Count">arrayIndex &lt;= array.Length - this.Count</requires>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.Remove(`0)">
+      <summary>
+            Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1" />.
+            </summary>
+      <param name="item">The object to remove from the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
+      <returns>
+            true if <paramref name="item" /> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, false. This method also returns false if <paramref name="item" /> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1" />.
+            </returns>
+      <ensures inheritedFrom="M:System.Collections.Generic.ICollection`1.Remove(`0)" inheritedFromTypeName="ICollection" csharp="this.Count &lt;= old(this.Count)" vb="Me.Count &lt;= old(Me.Count)">this.Count &lt;= old(this.Count)</ensures>
+      <ensures inheritedFrom="M:System.Collections.Generic.ICollection`1.Remove(`0)" inheritedFromTypeName="ICollection" csharp="result ⇒ this.Count &gt;= old(this.Count - 1)" vb="result Implies Me.Count &gt;= old(Me.Count - 1)">!result || this.Count &gt;= old(this.Count - 1)</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.IndexOf(`0)">
+      <summary>
+            Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1" />.
+            </summary>
+      <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.IList`1" />.</param>
+      <returns>
+            The index of <paramref name="item" /> if found in the list; otherwise, -1.
+            </returns>
+      <ensures inheritedFrom="M:System.Collections.Generic.IList`1.IndexOf(`0)" inheritedFromTypeName="IList" csharp="result &gt;= -1" vb="result &gt;= -1">result &gt;= -1</ensures>
+      <ensures inheritedFrom="M:System.Collections.Generic.IList`1.IndexOf(`0)" inheritedFromTypeName="IList" csharp="result &lt; this.Count" vb="result &lt; Me.Count">result &lt; this.Count</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.Insert(System.Int32,`0)">
+      <summary>
+            Inserts an item to the <see cref="T:System.Collections.Generic.IList`1" /> at the specified index.
+            </summary>
+      <param name="index">The zero-based index at which <paramref name="item" /> should be inserted.</param>
+      <param name="item">The object to insert into the <see cref="T:System.Collections.Generic.IList`1" />.</param>
+      <requires inheritedFrom="M:System.Collections.Generic.IList`1.Insert(System.Int32,`0)" inheritedFromTypeName="IList" csharp="index &gt;= 0" vb="index &gt;= 0">index &gt;= 0</requires>
+      <requires inheritedFrom="M:System.Collections.Generic.IList`1.Insert(System.Int32,`0)" inheritedFromTypeName="IList" csharp="index &lt;= this.Count" vb="index &lt;= Me.Count">index &lt;= this.Count</requires>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Distribution`1.RemoveAt(System.Int32)">
+      <summary>
+            Removes the <see cref="T:System.Collections.Generic.IList`1" /> item at the specified index.
+            </summary>
+      <param name="index">The zero-based index of the item to remove.</param>
+      <requires inheritedFrom="M:System.Collections.Generic.IList`1.RemoveAt(System.Int32)" inheritedFromTypeName="IList" csharp="index &gt;= 0" vb="index &gt;= 0">index &gt;= 0</requires>
+      <requires inheritedFrom="M:System.Collections.Generic.IList`1.RemoveAt(System.Int32)" inheritedFromTypeName="IList" csharp="index &lt; this.Count" vb="index &lt; Me.Count">index &lt; this.Count</requires>
+      <ensures inheritedFrom="M:System.Collections.Generic.IList`1.RemoveAt(System.Int32)" inheritedFromTypeName="IList" csharp="this.Count == old(this.Count) - 1" vb="Me.Count = old(Me.Count) - 1">this.Count == old(this.Count) - 1</ensures>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Distribution`1.Minimum">
+      <summary>
+            0-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Distribution`1.Maximum">
+      <summary>
+            1-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Distribution`1.Q25">
+      <summary>
+            0,25-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Distribution`1.Median">
+      <summary>
+            0,5-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Distribution`1.Q75">
+      <summary>
+            0,75-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Distribution`1.Count">
+      <summary>
+            Gets the count.
+            </summary>
+      <value>
+            The count.
+            </value>
+      <getter>
+        <ensures inheritedFrom="M:System.Collections.Generic.ICollection`1.get_Count" inheritedFromTypeName="ICollection" csharp="result &gt;= 0" vb="result &gt;= 0">result &gt;= 0</ensures>
+      </getter>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Distribution`1.IsReadOnly">
+      <summary>
+            Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only.
+            </summary>
+      <returns>true if the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only; otherwise, false.</returns>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Distribution`1.Item(System.Int32)">
+      <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+      <param name="index">The index.</param>
+      <returns />
+      <getter>
+        <requires inheritedFrom="M:System.Collections.Generic.IList`1.get_Item(System.Int32)" inheritedFromTypeName="IList" csharp="index &gt;= 0" vb="index &gt;= 0">index &gt;= 0</requires>
+        <requires inheritedFrom="M:System.Collections.Generic.IList`1.get_Item(System.Int32)" inheritedFromTypeName="IList" csharp="index &lt; this.Count" vb="index &lt; Me.Count">index &lt; this.Count</requires>
+      </getter>
+      <setter>
+        <requires inheritedFrom="M:System.Collections.Generic.IList`1.set_Item(System.Int32,`0)" inheritedFromTypeName="IList" csharp="index &gt;= 0" vb="index &gt;= 0">index &gt;= 0</requires>
+        <requires inheritedFrom="M:System.Collections.Generic.IList`1.set_Item(System.Int32,`0)" inheritedFromTypeName="IList" csharp="index &lt; this.Count" vb="index &lt; Me.Count">index &lt; this.Count</requires>
+      </setter>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.DoubleDistribution">
+      <summary>
+            Verteilung für double-Werte
+            </summary>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.IDoubleDistribution">
+      <summary>
+            Beschreibung für Verteilungen von double-Werten
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.IDoubleDistribution.Reduce">
+      <summary>
+            reduziert die Verteilung auf die definierten Eigenschaften
+            </summary>
+      <returns>reduzierte Verteilung</returns>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.IDoubleDistribution.Mean">
+      <summary>
+            Mittelwert
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.IDoubleDistribution.StandardDeviation">
+      <summary>
+            Standardabweichung
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.IDoubleDistribution.Skewness">
+      <summary>
+            Schiefe
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.DoubleDistribution.Reduce">
+      <summary>
+            reduziert die Verteilung auf die definierten Eigenschaften
+            </summary>
+      <returns>reduzierte Verteilung</returns>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.DoubleDistribution.Mean">
+      <summary>
+            berechnet den Mittelwert
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.DoubleDistribution.StandardDeviation">
+      <summary>
+            berechnet die Standardabweichung
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.DoubleDistribution.Skewness">
+      <summary>
+            berechnet die Schiefe
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Histogram.BhattacharyyaDistance(System.Collections.Generic.IList{System.Double},System.Collections.Generic.IList{System.Double})">
+      <summary>
+            http://en.wikipedia.org/wiki/Bhattacharyya_distance
+            </summary>
+      <param name="histogram1" />
+      <param name="histogram2" />
+      <returns />
+      <requires csharp="(() =&gt; {&#xD;&#xA;    {&#xD;&#xA;        Glaukopis.Core.Analysis.Histogram.&lt;&gt;c__DisplayClass19 local_2 = new Glaukopis.Core.Analysis.Histogram.&lt;&gt;c__DisplayClass19();&#xD;&#xA;    }&#xD;&#xA;    return histogram1.Count == histogram2.Count; })()" vb="(() =&gt; {&#xD;&#xA;    Glaukopis.Core.Analysis.Histogram.&lt;&gt;c__DisplayClass19 local_2 = New Glaukopis.Core.Analysis.Histogram.&lt;&gt;c__DisplayClass19();&#xD;&#xA;    return histogram1.Count = histogram2.Count; })()">(() =&gt; {
+    {
+        Glaukopis.Core.Analysis.Histogram.&lt;&gt;c__DisplayClass19 local_2 = new Glaukopis.Core.Analysis.Histogram.&lt;&gt;c__DisplayClass19();
+    }
+    return histogram1.Count == histogram2.Count; })()</requires>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.IDoubleDistributionExtensions">
+      <summary>
+            Erweiterung für double-Verteilungen
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.IDoubleDistributionExtensions.RelativeStandardDeviation(Glaukopis.Core.Analysis.IDoubleDistribution)">
+      <summary>
+            berechnet StandardDeviation/Mean
+            </summary>
+      <param name="doubleDistribution">Verteilung</param>
+      <returns>StandardDeviation/Mean</returns>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.IDoubleDistributionExtensions.RelativeInterquartileRange(Glaukopis.Core.Analysis.IDoubleDistribution)">
+      <summary>
+            berechnet (Q75-Q25)/Median
+            </summary>
+      <param name="doubleDistribution">Verteilung</param>
+      <returns>(Q75-Q25)/Median</returns>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.IDoubleDistributionExtensions.QuartileCoefficientOfDispersion(Glaukopis.Core.Analysis.IDoubleDistribution)">
+      <summary>
+            berechnet (Q75-Q25)/(Q75+Q25)
+            </summary>
+      <param name="doubleDistribution">Verteilung</param>
+      <returns>(Q75-Q25)/(Q75+Q25)</returns>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.IListExtensions">
+      <summary>
+            Erweiterungen für Listen, wenn diese eine diskrete Funktion oder ein Histogramm darstellen 
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.IListExtensions.Shift``1(System.Collections.Generic.IList{``0},System.Int32)">
+      <summary>
+            verschiebt die Rückgabewerte einer diskrete Funktion;
+            Werte größer source.Length werden vorn wieder eingefügt
+            </summary>
+      <typeparam name="T">Typ der Rückgabewerte</typeparam>
+      <param name="source">diskrete Funktion</param>
+      <param name="shift" />
+      <returns>verschobene Funktion</returns>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.ReadonlyDistribution`1">
+      <summary>
+            (schreibgeschützte) Verteilung die nur aus den Quantilen besteht
+            </summary>
+      <typeparam name="T" />
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.ReadonlyDistribution`1.#ctor(`0,`0,`0,`0,`0,System.Int32)">
+      <summary>
+            erzeugt die Verteilung
+            </summary>
+      <param name="minimum">Minimum</param>
+      <param name="q25">0,25-Quantil</param>
+      <param name="median">0,5-Quantil</param>
+      <param name="q75">0,75-Quantil</param>
+      <param name="maximum">Maximum</param>
+      <param name="count">Anzahl der Elemente</param>
+      <ensures csharp="0 != count" vb="0 &lt;&gt; count">0 != count</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Contains(`0,System.Boolean)">
+      <summary>
+            prüft ob ein Element zwischen <see cref="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Minimum" /> bzw. <see cref="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Maximum" /> liegt
+            </summary>
+      <param name="item">fragliches Element</param>
+      <param name="open">bestimmt ob das Intervall offen ist; falls true: <see cref="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Minimum" /> und <see cref="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Maximum" /> sind nicht enthalten</param>
+      <returns>true wenn enthalten, false sonst</returns>
+      <pure />
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Reduce``1(System.Func{`0,``0})">
+      <summary>
+            konvertiert den Typ der Verteilung
+            </summary>
+      <typeparam name="TNew">neuer Typ</typeparam>
+      <param name="convert">Konvertierungsmethode</param>
+      <returns>konvertierte Verteilung</returns>
+      <pure />
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Minimum">
+      <summary>
+            0-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Maximum">
+      <summary>
+            1-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Count">
+      <summary>
+            Anzahl der Elemente
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Q25">
+      <summary>
+            0,25-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Median">
+      <summary>
+            0,5-Quantil
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ReadonlyDistribution`1.Q75">
+      <summary>
+            0,75-Quantil
+            </summary>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.ReadonlyDoubleDistribution">
+      <summary>
+            schreibgeschützte Verteilung von double-Werten
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.ReadonlyDoubleDistribution.#ctor(Glaukopis.Core.Analysis.IDistribution{System.Double},System.Double,System.Double,System.Double)">
+      <summary>
+            erzeugt die Verteilung
+            </summary>
+      <param name="baseDistribution">Basisverteilung</param>
+      <param name="mean">Mittelwert</param>
+      <param name="standardDeviation">Standardabweichung</param>
+      <param name="skewness">Schiefe</param>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.ReadonlyDoubleDistribution.Reduce">
+      <summary>
+            reduziert die Verteilung auf die definierten Eigenschaften
+            </summary>
+      <returns>reduzierte Verteilung</returns>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ReadonlyDoubleDistribution.Mean">
+      <summary>
+            Mittelwert
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ReadonlyDoubleDistribution.StandardDeviation">
+      <summary>
+            Standardabweichung
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.ReadonlyDoubleDistribution.Skewness">
+      <summary>
+            Schiefe
+            </summary>
+    </member>
+    <member name="T:Glaukopis.Core.DoubleExtensions">
+      <summary>
+            Erweiterung für double-Typen
+            </summary>
+    </member>
+    <member name="F:Glaukopis.Core.DoubleExtensions.Tolerance">
+      <summary>
+            Toleranz für den Vergleich von double-Werten mit <see cref="M:Glaukopis.Core.DoubleExtensions.AreEqual(System.Double,System.Double)" /></summary>
+    </member>
+    <member name="M:Glaukopis.Core.DoubleExtensions.AreEqual(System.Double,System.Double)">
+      <summary>
+            prüft die Gleicheit zweier double-Werte mit unter Berücksichtigung von <see cref="F:Glaukopis.Core.DoubleExtensions.Tolerance" /></summary>
+      <param name="a">double a</param>
+      <param name="b">double b</param>
+      <returns>true wenn a==b; false sonst</returns>
+    </member>
+    <member name="M:Glaukopis.Core.DoubleExtensions.IsNumericValue(System.Double)">
+      <summary>
+            prüft ob der Wert eine Zahl darstellt
+            </summary>
+      <param name="d">zu prüfender Wert</param>
+      <returns>false wenn NaN oder Unendlich, true sonst</returns>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.Range`1">
+      <summary>
+            eindimensionale Begrenzung (Minimum und Maximum) für ordinalskalierbare Typen
+            </summary>
+      <typeparam name="T">ordinalskalierbarer Typ</typeparam>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Range`1.#ctor(System.Comparison{`0})">
+      <summary>
+            erzeugt die Begrenzung
+            </summary>
+      <param name="comparison">Vergleichsmethode für die Elemente, muß für Implementierungen von IComparable nicht angegeben werden</param>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Range`1.#ctor(`0,`0,System.Comparison{`0})">
+      <summary>
+            erzeugt eine Begrenzung
+            </summary>
+      <param name="minimum">Minimum</param>
+      <param name="maximum">Maximum</param>
+      <param name="comparison">Vergleichsmethode für die Elemente, muß für Implementierungen von IComparable nicht angegeben werden</param>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Range`1.Contains(`0,System.Boolean)">
+      <summary>
+            prüft ob ein Element zwischen <see cref="P:Glaukopis.Core.Analysis.Range`1.Minimum" /> bzw. <see cref="P:Glaukopis.Core.Analysis.Range`1.Maximum" /> liegt
+            </summary>
+      <param name="item">fragliches Element</param>
+      <param name="open">bestimmt ob das Intervall offen ist; falls true: <see cref="P:Glaukopis.Core.Analysis.Range`1.Minimum" /> und <see cref="P:Glaukopis.Core.Analysis.Range`1.Maximum" /> sind nicht enthalten</param>
+      <returns>true wenn enthalten, false sonst</returns>
+      <pure />
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Range`1.Add(`0)">
+      <summary>
+            fügt ein Element hinzu;
+            <see cref="P:Glaukopis.Core.Analysis.Range`1.Minimum" /> bzw. <see cref="P:Glaukopis.Core.Analysis.Range`1.Maximum" /> werden falls nötig aktualisiert
+            </summary>
+      <param name="item">Element</param>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Range`1.Clear">
+      <summary>
+            leert die Begrenzung
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Range`1.GetEnumerator">
+      <summary>
+            liefert den typisierten Enumerator
+            </summary>
+      <ensures inheritedFrom="M:System.Collections.Generic.IEnumerable`1.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result != null" vb="result &lt;&gt; Nothing">result != null</ensures>
+      <ensures inheritedFrom="M:System.Collections.Generic.IEnumerable`1.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result.get_Model == this.get_Model" vb="result.get_Model = Me.get_Model">result.get_Model == this.get_Model</ensures>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Range`1.Add(System.Collections.Generic.IEnumerable{`0})">
+      <summary>
+            fügt eine Menge von Elementen hinzu;
+            wird für den Objekt-Initializer benötigt
+            </summary>
+      <param name="items">Menge von Elementen</param>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Range`1.Minimum">
+      <summary>
+            kleinstes Element
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Range`1.Maximum">
+      <summary>
+            größtes Element
+            </summary>
+    </member>
+    <member name="P:Glaukopis.Core.Analysis.Range`1.Count">
+      <summary>
+            Anzahl der Elemente
+            </summary>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.EmptyRangeException">
+      <summary>
+            Ausnahme für den Fall das die Begrenzung leer ist
+            </summary>
+    </member>
+    <member name="T:Glaukopis.Core.Analysis.TypeNotRankableException">
+      <summary>
+            Ausnahme für den Fall das der parametrisierte Typ der Begrenzung <see cref="T:System.IComparable" /> nicht implementiert und keine comparison angegeben wurde
+            </summary>
+    </member>
+    <member name="M:Glaukopis.Core.Analysis.Range`1.System#Collections#IEnumerable#GetEnumerator">
+      <ensures inheritedFrom="M:System.Collections.IEnumerable.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result != null" vb="result &lt;&gt; Nothing">result != null</ensures>
+      <ensures inheritedFrom="M:System.Collections.IEnumerable.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result.get_Model == this.get_Model" vb="result.get_Model = Me.get_Model">result.get_Model == this.get_Model</ensures>
+      <ensures inheritedFrom="M:System.Collections.IEnumerable.GetEnumerator" inheritedFromTypeName="IEnumerable" csharp="result.get_CurrentIndex == -1" vb="result.get_CurrentIndex = -1">result.get_CurrentIndex == -1</ensures>
+    </member>
+  </members>
+</doc>
