@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deconvolution", "Deconvolution\Deconvolution.csproj", "{E59D0FB4-4157-4038-A550-A19D00C2063B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TissueDetection", "TissueDetection\TissueDetection.csproj", "{BA26A5C3-F5FA-463F-B5E1-9BD6F9821799}"
@@ -8,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StromaDetectionPlugin", "StromaDetectionPlugin\StromaDetectionPlugin.csproj", "{D1A54EE0-CAE0-4514-964E-C877F62146F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeatMapViewer", "HeatMapViewer\HeatMapViewer.csproj", "{828885D6-8CA0-4D6B-B421-BDC2DD6A06F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StromaDetectionExecute", "StromaDetectionExecute\StromaDetectionExecute.csproj", "{7C257F4F-58C1-4A98-8469-B309930E42F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{828885D6-8CA0-4D6B-B421-BDC2DD6A06F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{828885D6-8CA0-4D6B-B421-BDC2DD6A06F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{828885D6-8CA0-4D6B-B421-BDC2DD6A06F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C257F4F-58C1-4A98-8469-B309930E42F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C257F4F-58C1-4A98-8469-B309930E42F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C257F4F-58C1-4A98-8469-B309930E42F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C257F4F-58C1-4A98-8469-B309930E42F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
