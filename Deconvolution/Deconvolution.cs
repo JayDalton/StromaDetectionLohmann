@@ -1,6 +1,7 @@
 ﻿/*
  * @author Sebastian Lohmann
  */
+<<<<<<< HEAD
 using Glaukopis.Adapters.R;
 using Glaukopis.Core.Analysis;
 using Glaukopis.SlideProcessing;
@@ -16,6 +17,23 @@ using System.IO;
 
 namespace Deconvolution
 {
+=======
+namespace Deconvolution
+{
+  using Glaukopis.Adapters.R;
+  using Glaukopis.Core.Analysis;
+  using Glaukopis.SlideProcessing;
+  using RDotNet;
+  using SharpAccessory.CognitionMaster.WholeSlideImageSupport;
+  using SharpAccessory.Imaging.Filters;
+  using SharpAccessory.VirtualMicroscopy;
+  using System;
+  using System.Collections.Generic;
+  using System.Diagnostics;
+  using System.Drawing;
+  using System.IO;
+
+>>>>>>> origin/master
   static class Deconvolution
   {
     private static void Main(string[] args)
@@ -33,7 +51,11 @@ namespace Deconvolution
       
       TiledProcessInformation<uint[]> haematoxylinHistogram;
       TiledProcessInformation<uint[]> eosinHistogram;
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> origin/master
       if (!File.Exists(processinHelper.DataPath + "haematoxylinHistogram.tpi") || !File.Exists(processinHelper.DataPath + "eosinHistogram.tpi"))
       {
         if (!Directory.Exists(processinHelper.DataPath + "deconvolution")) Directory.CreateDirectory(processinHelper.DataPath + "deconvolution");

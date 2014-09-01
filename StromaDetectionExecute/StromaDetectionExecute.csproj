@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7C257F4F-58C1-4A98-8469-B309930E42F6}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StromaDetectionExecute</RootNamespace>
+    <AssemblyName>StromaDetectionExecute</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="#Accessory">
+      <HintPath>..\..\..\Program Files\#Accessory\CognitionMaster\#Accessory.dll</HintPath>
+    </Reference>
+    <Reference Include="#Accessory.CognitionMaster.WholeSlideImageSupport">
+      <HintPath>..\..\..\Program Files\#Accessory\CognitionMaster\#Accessory.CognitionMaster.WholeSlideImageSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="#Accessory.Imaging">
+      <HintPath>..\..\..\Program Files\#Accessory\CognitionMaster\#Accessory.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="#AccessoryExtension">
+      <HintPath>..\dependencies\#AccessoryExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Glaukopis.SlideProcessing">
+      <HintPath>..\dependencies\Glaukopis.SlideProcessing.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="VMscope.InteropCore, Version=4.0.5007.10799, Culture=neutral, PublicKeyToken=3c30ce52959764dc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files\VMscope\Virtual Slide Access - SDK 4.0\VMscope.InteropCore.DLL</HintPath>
+    </Reference>
+    <Reference Include="VMscope.VirtualSlideAccess, Version=4.0.5007.10842, Culture=neutral, PublicKeyToken=7bcee14bf0bd218b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files\VMscope\Virtual Slide Access - SDK 4.0\VMscope.VirtualSlideAccess.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ausgabe.cs" />
+    <Compile Include="Eingabe.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ausgabe.csv" />
+    <None Include="eingabe.csv" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
