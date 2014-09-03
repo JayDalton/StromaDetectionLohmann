@@ -118,12 +118,14 @@ namespace StromaDetectionPlugin
         var substracted = new double[this.responseH.Size.Width, this.responseH.Size.Height];
         var substractedRange = new Range<double>();
         for (var x = 0; x < this.responseH.Size.Width; x++)
+        {
           for (var y = 0; y < this.responseH.Size.Height; y++)
           {
             var value = Math.Max(0, this.responseE.Gradient[x, y] - this.responseH.Gradient[x, y]);
             substracted[x, y] = value;
             substractedRange.Add(value);
           }
+        }
         this.nonMaximumSupression = Filtering.ExecuteNonMaximumSupression(substracted, this.responseE.Orientation);
         this.edges = Visualization.Visualize(this.nonMaximumSupression, Visualization.CreateColorizing(substractedRange.Maximum));
         this.SetDisplayedImage(this.edges);

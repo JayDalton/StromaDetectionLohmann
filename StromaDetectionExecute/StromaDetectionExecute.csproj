@@ -45,8 +45,23 @@
     <Reference Include="#AccessoryExtension">
       <HintPath>..\dependencies\#AccessoryExtension.dll</HintPath>
     </Reference>
+    <Reference Include="Glaukopis.Adapters.R">
+      <HintPath>..\dependencies\Glaukopis.Adapters.R.dll</HintPath>
+    </Reference>
+    <Reference Include="Glaukopis.Core">
+      <HintPath>..\dependencies\Glaukopis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glaukopis.SharpAccessoryIntegration.Filter">
+      <HintPath>..\dependencies\Glaukopis.SharpAccessoryIntegration.Filter.dll</HintPath>
+    </Reference>
     <Reference Include="Glaukopis.SlideProcessing">
       <HintPath>..\dependencies\Glaukopis.SlideProcessing.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet">
+      <HintPath>..\dependencies\RDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet.NativeLibrary">
+      <HintPath>..\dependencies\RDotNet.NativeLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />

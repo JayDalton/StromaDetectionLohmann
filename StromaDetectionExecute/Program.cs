@@ -6,10 +6,14 @@ using System.Text;
 using System.Drawing;
 using System.Threading.Tasks;
 using Glaukopis.SlideProcessing;
+using Glaukopis.Core.Analysis;
+using Glaukopis.SharpAccessoryIntegration.Filter;
+//using Glaukopis.SharpAccessoryIntegration.Segmentation;
 using SharpAccessory.Imaging.DigitalPathology;
 using SharpAccessory.Imaging.Processors;
 using SharpAccessory.Imaging.Segmentation;
 using SharpAccessory.VirtualMicroscopy;
+using SharpAccessory.Imaging.Filters;
 
 namespace StromaDetectionExecute
 {
@@ -40,39 +44,78 @@ namespace StromaDetectionExecute
 
     private static void processInput()
     {
-      const int OverviewTileSize = 128;
-      const int Radius = 2;
-      const int NoiseLevel = 10;
+      int Radius = 2;
+      int NoiseLevel = 10;
 
+      Console.WriteLine("Processing Input...");
       foreach (var import in importItems)
       {
-        Console.WriteLine("Items ....");
-        Console.WriteLine(import.Identify);
+        Console.WriteLine();
         Console.WriteLine(import.FileName);
-        Console.WriteLine(import.UpperLeft);
-        Console.WriteLine(import.LowerRight);
 
+        Console.WriteLine("Slide extrahieren...");
         var processingHelper = new Processing(import.FileName);
         var slide = processingHelper.Slide;
 
-        var part = new WsiPartitioner(new Rectangle(new Point(0, 0), slide.Size), new Size(1000, 1000), new Size(0, 0), 1.0);
-        var tissueData = new TiledProcessInformation<bool>(part, import.FileName);
+        Console.WriteLine("Ausschnitt aus Slide extrahieren mit originaler Auflösung...");
+        int partImageWidth = import.LowerRight.X - import.UpperLeft.X;
+        int partImageHeight = import.LowerRight.Y - import.UpperLeft.Y;
+        Bitmap partImage = slide.GetImagePart(
+          import.UpperLeft.X, import.UpperLeft.Y,
+          partImageWidth, partImageHeight,
+          partImageWidth, partImageHeight
+        );
 
         #region global tissue detection
-        int overviewImageWidth = slide.Size.Width / OverviewTileSize;
-        int overviewImageHeight = slide.Size.Height / OverviewTileSize;
-
-        Bitmap overviewImage = slide.GetImagePart(0, 0, slide.Size.Width, slide.Size.Height, overviewImageWidth, overviewImageHeight);
-
-        var bitmapProcessor = new BitmapProcessor(overviewImage);
-
+        Console.WriteLine("Gewebe suchen und in separatem Layer speichern...");
+        var bitmapProcessor = new BitmapProcessor(partImage);
         ObjectLayer overviewLayer = new TissueDetector().Execute(bitmapProcessor, Radius, NoiseLevel);
-
         bitmapProcessor.Dispose();
 
-        DrawObjectsToImage(overviewImage, overviewLayer, Color.Black);
-        overviewImage.Save(processingHelper.DataPath + "_" + import.Identify + "_" + "tissueDetectionOverview.png");
+        Console.WriteLine("Gewebe-Layer in Ausschnitt zeichnen + speichern...");
+        DrawObjectsToImage(partImage, overviewLayer, Color.Black);
+        partImage.Save(processingHelper.DataPath + "ImagePartTissue.png");
         #endregion global tissue detection
+
+        #region Deconvolution
+        Console.WriteLine("Execute deconvolution 3...");
+        var gpX = new ColorDeconvolution().Get3rdStain(partImage, ColorDeconvolution.KnownStain.HaematoxylinEosin);
+        gpX.Dispose();
+        Bitmap gpX_bmp = gpX.Bitmap;
+        gpX_bmp.Save(processingHelper.DataPath + "ImagePartColor3.png");
+
+        Console.WriteLine("Execute deconvolution 2...");
+        var gpE = new ColorDeconvolution().Get2ndStain(partImage, ColorDeconvolution.KnownStain.HaematoxylinEosin);
+        gpE.Dispose();
+        Bitmap gpE_bmp = gpE.Bitmap;
+        gpE_bmp.Save(processingHelper.DataPath + "ImagePartColor2.png");
+
+        Console.WriteLine("Execute deconvolution 1...");
+        var gpH = new ColorDeconvolution().Get1stStain(partImage, ColorDeconvolution.KnownStain.HaematoxylinEosin);
+        gpH.Dispose();
+        Bitmap gpH_bmp = gpH.Bitmap;
+        gpH_bmp.Save(processingHelper.DataPath + "ImagePartColor1.png");
+        #endregion Deconvolution
+
+        #region execute edge detection
+        Console.WriteLine("Execute edge detection...");
+        SobelResponse responseH = Filtering.ExecuteSobel(gpH_bmp);
+        SobelResponse responseE = Filtering.ExecuteSobel(gpE_bmp);
+        var substracted = new double[responseH.Size.Width, responseH.Size.Height];
+        var substractedRange = new Range<double>();
+        for (var x = 0; x < responseH.Size.Width; x++)
+        {
+          for (var y = 0; y < responseH.Size.Height; y++)
+          {
+            var value = Math.Max(0, responseE.Gradient[x, y] - responseH.Gradient[x, y]);
+            substracted[x, y] = value;
+            substractedRange.Add(value);
+          }
+        }
+        double[,] nonMaximumSupression = Filtering.ExecuteNonMaximumSupression(substracted, responseE.Orientation);
+        Bitmap edges = Visualization.Visualize(nonMaximumSupression, Visualization.CreateColorizing(substractedRange.Maximum));
+        edges.Save(processingHelper.DataPath + "ImagePartEdges.png");
+        #endregion execute edge detection
       }
 
     }
@@ -106,8 +149,6 @@ namespace StromaDetectionExecute
       StreamReader file = new StreamReader(fileName);
       while ((line = file.ReadLine()) != null)
       {
-        Console.WriteLine("Import Information:");
-        Console.WriteLine(line);
         importItems.Add(parseLine(line));
       }
       file.Close();
