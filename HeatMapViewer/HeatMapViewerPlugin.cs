@@ -1,7 +1,6 @@
 ﻿/*
  * @author Sebastian Lohmann
  */
-<<<<<<< HEAD
 using Glaukopis.CognitionMasterIntegration;
 using Glaukopis.SlideProcessing;
 using SharpAccessory.CognitionMaster.Plugging;
@@ -14,9 +13,6 @@ using System.Windows.Forms;
 
 namespace Glaukopis.CognitionMasterPlugins
 {
-=======
-namespace Glaukopis.CognitionMasterPlugins
-{
   using Glaukopis.CognitionMasterIntegration;
   using Glaukopis.SlideProcessing;
   using SharpAccessory.CognitionMaster.Plugging;
@@ -26,7 +22,7 @@ namespace Glaukopis.CognitionMasterPlugins
   using System.Drawing;
   using System.IO;
   using System.Windows.Forms;
->>>>>>> origin/master
+
   [PluginDefaultEnabled(true)]
   public class HeatMapViewerPlugin : Plugin
   {
@@ -35,10 +31,7 @@ namespace Glaukopis.CognitionMasterPlugins
     private Processing dataHolder;
     private ComboBox comboBox;
     private readonly Dictionary<string, string> heatMapNames = new Dictionary<string, string>();
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/master
+
     protected override void OnLoad(EventArgs e)
     {
       base.OnLoad(e);
@@ -49,10 +42,7 @@ namespace Glaukopis.CognitionMasterPlugins
       this.comboBox = new ComboBox { Parent = this.TabContainer, Dock = DockStyle.Top, DropDownStyle = ComboBoxStyle.DropDownList };
       this.comboBox.SelectedValueChanged += this.comboBox_SelectedValueChanged;
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/master
+
     void pictureBox_Click(object sender, EventArgs e)
     {
       var mouseEventArgs = e as MouseEventArgs;
@@ -63,10 +53,7 @@ namespace Glaukopis.CognitionMasterPlugins
       var target = new PointF(imageCoordinate.X / this.widthRatio, imageCoordinate.Y / this.heightRatio);
       WsiInterop.Navigation.Goto(WsiInterop.Navigation.Zoom, target);
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/master
+
     void comboBox_SelectedValueChanged(object sender, EventArgs e)
     {
       var item = this.comboBox.SelectedItem as string;
@@ -79,10 +66,7 @@ namespace Glaukopis.CognitionMasterPlugins
       this._heightRatio = null;
       this.wsiInteropNavigationChanged(sender, e);
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/master
+
     protected override void OnImageFileOpened(EventArgs e)
     {
       base.OnImageFileOpened(e);
@@ -107,19 +91,13 @@ namespace Glaukopis.CognitionMasterPlugins
         this.comboBox.Items.Add(n);
       }
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/master
+
     protected override void OnImageFileClosed(EventArgs e)
     {
       base.OnImageFileClosed(e);
       WsiInterop.Navigation.Changed -= this.wsiInteropNavigationChanged;
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/master
+
     private void wsiInteropNavigationChanged(object sender, EventArgs eventArgs)
     {
       if (null == this.heatMap) return;
@@ -131,16 +109,12 @@ namespace Glaukopis.CognitionMasterPlugins
       this.pictureBox.Image.Dispose();
       this.pictureBox.Image = image;
     }
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/master
+
     private float? _widthRatio;
     private float widthRatio
     {
       get
       {
-<<<<<<< HEAD
         if (!this._widthRatio.HasValue)
         {
           this._widthRatio = this.heatMap.Width / (float)WsiInterop.Wsi.Size.Width;
@@ -149,25 +123,15 @@ namespace Glaukopis.CognitionMasterPlugins
       }
     }
 
-=======
-        if (!this._widthRatio.HasValue) this._widthRatio = this.heatMap.Width / (float)WsiInterop.Wsi.Size.Width;
-        return this._widthRatio.Value;
-      }
-    }
->>>>>>> origin/master
     private float? _heightRatio;
     private float heightRatio
     {
       get
       {
-<<<<<<< HEAD
         if (!this._heightRatio.HasValue) 
         { 
           this._heightRatio = this.heatMap.Height / (float)WsiInterop.Wsi.Size.Height; 
         }
-=======
-        if (!this._heightRatio.HasValue) this._heightRatio = this.heatMap.Height / (float)WsiInterop.Wsi.Size.Height;
->>>>>>> origin/master
         return this._heightRatio.Value;
       }
     }
