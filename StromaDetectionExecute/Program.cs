@@ -19,8 +19,8 @@ namespace StromaDetectionExecute
 {
   class Program
   {
-    private static List<Eingabe> importItems;
-    private static List<Ausgabe> exportItems;
+    private static List<Eingabe> importItems = new List<Eingabe>();
+    private static List<Ausgabe> exportItems = new List<Ausgabe>();
 
     static void Main(string[] args)
     {
@@ -31,6 +31,9 @@ namespace StromaDetectionExecute
         processInput();
 
         writeResultFile(args[1]);
+
+        Console.WriteLine();
+        Console.WriteLine("Execution ended!");
         Console.ReadLine();
       }
       else
@@ -116,6 +119,14 @@ namespace StromaDetectionExecute
         Bitmap edges = Visualization.Visualize(nonMaximumSupression, Visualization.CreateColorizing(substractedRange.Maximum));
         edges.Save(processingHelper.DataPath + "ImagePartEdges.png");
         #endregion execute edge detection
+
+        exportItems.Add(
+          new Ausgabe {
+            Identify = import.Identify, 
+            Result = false, 
+            Message = "kein Fehler" 
+          }
+        );
       }
 
     }
@@ -145,7 +156,6 @@ namespace StromaDetectionExecute
     private static void readInputFile(string fileName)
     {
       string line;
-      importItems = new List<Eingabe>();
       StreamReader file = new StreamReader(fileName);
       while ((line = file.ReadLine()) != null)
       {
@@ -156,16 +166,14 @@ namespace StromaDetectionExecute
 
     private static void writeResultFile(string resultFileName)
     {
-      var resultCSV = new StringBuilder();
+      var resultFile = new StringBuilder();
 
-      //für jedes Ergebnis
-      string id = "0";
-      string resultText = "ja";
-      string errorText = "kein Fehler";
-      var newCSVLine = string.Format("{0},{1},{2}", id, resultText, errorText);
-      resultCSV.AppendLine(newCSVLine);
+      foreach (var item in exportItems)
+      {
+        resultFile.AppendLine(string.Format("{0},{1},{2}", item.Identify, item.Result, item.Message));
+      }
 
-      File.WriteAllText(resultFileName, resultCSV.ToString());
+      File.WriteAllText(resultFileName, resultFile.ToString());
     }
 
     private static Eingabe parseLine(string line)

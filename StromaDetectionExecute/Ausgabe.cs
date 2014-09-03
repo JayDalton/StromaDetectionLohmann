@@ -10,5 +10,6 @@ namespace StromaDetectionExecute
   {
     public uint Identify;
     public bool Result;
+    public string Message;
   }
 }
